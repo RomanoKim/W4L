@@ -1,0 +1,80 @@
+#!/bin/python3
+
+#2D VN Waifus 4 Laifu
+
+from curses import *
+from fdef import *
+
+scr = initscr() # win = scr
+scr.keypad(True) # enable more keys
+noecho() # don't show input
+cbreak() # ctrl+c kill
+curs_set(0) # invis cursor
+
+# selected menu option
+menu_sel = 0
+
+loc = 0
+# loc 0 = intro
+
+
+
+running = True
+while running:
+	while loc == 0:
+		scr.erase()
+		if menu_sel == 0:
+			cpac(scr, -1, "Start New Game", [A_BOLD, A_REVERSE])
+		else:
+			cpac(scr, -1, "Start New Game", [A_BOLD])
+		if menu_sel == 1:
+			cpac(scr, 0, "Load Game", [A_BOLD, A_REVERSE])
+		else:
+			cpac(scr, 0, "Load Game", [A_BOLD])
+		if menu_sel == 2:
+			cpac(scr, 1, "Quit", [A_BOLD, A_REVERSE])
+		else:
+			cpac(scr, 1, "Quit", [A_BOLD])
+		c = scr.getch()
+		if c == 10: # '\n'
+			if menu_sel == 0:
+				loc = 1
+			elif menu_sel == 1:
+				pass # DO LATEr
+			elif menu_sel == 2:
+				loc = -1
+				running = False
+		elif c == KEY_DOWN:
+			if menu_sel == 2:
+				menu_sel = 0
+			else:
+				menu_sel += 1
+		elif c == KEY_UP:
+			if menu_sel == 0:
+				menu_sel = 2
+			else:
+				menu_sel -= 1
+
+
+	para = 0
+	while loc == 1:
+		scr.erase()
+		if para == 0:
+			cpabox(scr, 0, "なに?!?!?!?!?!?!?! わたしのおちんちんはどこ?!?!?!?!?!?!?!")
+			cpabox(scr, 1, "わたしいまのしょじょか?!?!?!?!?!?!")
+		elif para == 1:
+			cpabox(scr, 0, "WHATR !?!?!?")
+		c = scr.getch()
+		if c == 113:
+			loc = 0
+		elif c == 32:
+			if para < 1:
+				para += 1
+
+
+# end of program
+scr.keypad(False)
+echo()
+curs_set(1)
+endwin()
+exit(0)
