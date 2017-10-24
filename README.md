@@ -3,14 +3,27 @@ best vn
 
 
 ### Controls
-Press 'e' to switch between english and japanese.
+Press 'e' to switch between English and Japanese.
+Press '<space>' to advance dialog.
 
 
 ## Design Notes/Specifications
+Style:
 We're switching to spaces for indentation because atom and every
 editor with auto indent just fucks everything up every time I switch back
-to vim.
+to vim. 'Tab' width will be 4-spaces wide.
 
+
+Graphics:
+Very few terminals support in-terminal image viewing, not to mention
+requiring external libraries, I've decided to compromise on an ASCII
+'block' (█) version. It will still be based on real image files but
+instead of presenting them directly, an average of the RGB values
+will be taken for every 4x8 section and a block will be printed for each
+in the top 78% of the terminal window (scr).
+
+
+Terminal Requirements:
 The game will use special characters as well as colour, most terminals can
 support both of these given they've been updated in the last decade.
 
@@ -27,3 +40,4 @@ Including japanese terminal fonts, the following characters should be visible in
 your terminal (copy and paste if you're seeing this in browser):
 
 🢂🢀 (heavy arrows)
+█
