@@ -31,6 +31,12 @@ in the top 78% of the terminal window (scr). *When creating* **images**,
 The game will use special characters as well as colour, most terminals can
 support both of these given they've been updated in the last decade.
 
+The game will have partial-mouse support, as in the mouse will work in most
+areas of the game but the player will still require a keyboard. Note that
+it is not necessary to use a terminal with mouse support (though most do),
+the game will poll for mouse events and will move on if they are not
+supported.
+
 The minimum terminal size I've decided on is **76** half-width characters
 across which is equivalent to **38** full-width characters across, as well as
 **23** rows down. Which is just slightly lower than the standard 80x24. Meaning
@@ -43,6 +49,6 @@ regular ASCII will count as **1**.
 Including japanese terminal fonts, the following characters should be visible in
 your terminal (copy and paste if you're seeing this in browser):
 
-🢂🢀 (heavy arrows)
+🢂 🢀 (heavy arrows)
 
 █ (block)
