@@ -1,11 +1,13 @@
-# W4L
-best vn
+# W4L:
+## Waifu 4 Laifu; search for the missing cock.
 
 
 ### Controls
 Press 'e' to switch between English and Japanese.
 
-Press '<space>' to advance dialog.
+Press '(space)' to advance dialog.
+
+Use the arrow keys to change selections.
 
 
 ## Design Notes/Specifications
