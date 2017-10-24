@@ -7,6 +7,10 @@
 from curses import *
 from fdef import *
 from system import *
+import os
+
+# reduce escape delay to 10ms
+os.environ.setdefault('ESCDELAY', '10')
 
 # initialize curses mode
 scr = initscr() # win = scr
@@ -14,9 +18,13 @@ scr.keypad(True) # enable more keys
 noecho() # don't show input
 cbreak() # ctrl+c kill
 curs_set(0) # invis cursor
+# enable mouse events
+mousemask(ALL_MOUSE_EVENTS)
+# immediate mouse events
+mouseinterval(15)
 
 
-# initialize system variables
+# initialize system controller
 syst = system()
 
 while syst.running:
@@ -96,18 +104,38 @@ while syst.running:
                     "Am I... a woman now?!?!??!"])
             elif syst.para == 1:
                 cpabox(scr, ["What the fuck??!?!?"])
+        # don't delay input
         c = scr.getch()
-        if c == 113:
+        if c == 27:
             syst.move(0) # return to menu
-        elif c == 32:
-            if syst.para < syst.para_max:
-                syst.para += 1
+        elif c == 32: # space = advance
+            syst.forward()
         elif c == 101: # e for lang change
             syst.lang_change()
+        # get mouse input
+        elif c == KEY_MOUSE:
+            # get state
+            # yes, the try-except is necessary as sporadic input
+            # raises an exception for some reason
+            try:
+                _, _, _, _, state = getmouse()
+            except Exception as e:
+                pass
+            if state == BUTTON1_PRESSED:
+                syst.forward()
+            elif state == BUTTON3_PRESSED: # right mouse
+                syst.back()
+            elif state == 2097152: # middle down once
+                syst.forward()
+            elif state == 65536: # middle up once
+                syst.back()
+
 
 
 # end of program
 scr.keypad(False)
+mousemask(0)
+mouseinterval(200)
 echo()
 curs_set(1)
 endwin()

@@ -51,3 +51,11 @@ class system:
             self.lang = 1
         else:
             self.lang = 0
+
+    def forward(self):
+        if self.para < self.para_max:
+            self.para += 1
+
+    def back(self):
+        if self.para > 0:
+            self.para -= 1
