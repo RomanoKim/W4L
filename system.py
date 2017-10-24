@@ -52,10 +52,12 @@ class system:
         else:
             self.lang = 0
 
+    # advance to next para
     def forward(self):
         if self.para < self.para_max:
             self.para += 1
 
+    # go back to last para
     def back(self):
         if self.para > 0:
             self.para -= 1
