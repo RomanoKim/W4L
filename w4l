@@ -88,7 +88,20 @@ while syst.running:
                 syst.menu_sel -= 1
         elif c == 101: # e to change language
             syst.lang_change()
-
+        # mouse event
+        elif c == KEY_MOUSE:
+            try:
+                _, x, y, _, state = getmouse()
+            except Exception as e:
+                pass
+            # on left click
+            if state == BUTTON1_PRESSED:
+                if y == max_y//2-1 and x < max_x//2+14 and x > max_x//2-14:
+                    syst.move(1)
+                elif y == max_y//2-0 and x < max_x//2+12 and x > max_x//2-12:
+                    pass
+                elif y == max_y//2+1 and x < max_x//2+11 and x > max_x//2-11:
+                    syst.quit_game()
 
     while syst.loc == 1:
         scr.erase()
