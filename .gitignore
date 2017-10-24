@@ -1,4 +1,6 @@
+# game save files
 *.sav
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

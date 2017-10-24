@@ -2,74 +2,108 @@
 
 #2D VN Waifus 4 Laifu
 
+# spec chars: • █ ⮕ 🢂 🢀
+
 from curses import *
 from fdef import *
+from system import *
 
+# initialize curses mode
 scr = initscr() # win = scr
 scr.keypad(True) # enable more keys
 noecho() # don't show input
 cbreak() # ctrl+c kill
 curs_set(0) # invis cursor
 
-# selected menu option
-menu_sel = 0
 
-loc = 0
-# loc 0 = intro
+# initialize system variables
+syst = system()
+
+while syst.running:
+    # Main Menu
+    while syst.loc == 0:
+        scr.erase() # clear
+        max_y, max_x = scr.getmaxyx()
+        if syst.lang == 0: # JPN
+            cpa(scr, max_y-1, 0, "(e)nglish", [A_REVERSE])
+        else: # 1, english
+            cpa(scr, max_y-1, 0, "(e)日本語", [A_REVERSE])
+
+        # highlight current option
+        if syst.lang == 0: # jpn
+            if syst.menu_sel == 0:
+                cpac(scr, -1, " 🢂 ゲームをスタート 🢀 ", [A_BOLD, A_REVERSE])
+            else:
+                cpac(scr, -1, "  ゲームをスタート  ", [A_BOLD])
+            if syst.menu_sel == 1:
+                cpac(scr, 0, " 🢂 ロードセーブ 🢀 ", [A_BOLD, A_REVERSE])
+            else:
+                cpac(scr, 0, "  ロードセーブ  ", [A_BOLD])
+            if syst.menu_sel == 2:
+                cpac(scr, 1, " 🢂 終了ゲーム 🢀 ", [A_BOLD, A_REVERSE])
+            else:
+                cpac(scr, 1, "  終了ゲーム  ", [A_BOLD])
+        else: # syst.lang == 1/ english
+            if syst.menu_sel == 0:
+                cpac(scr, -1, " 🢂 Start New Game 🢀 ", [A_BOLD, A_REVERSE])
+            else:
+                cpac(scr, -1, "   Start New Game   ", [A_BOLD])
+            if syst.menu_sel == 1:
+                cpac(scr, 0, " 🢂 Load Game 🢀 ", [A_BOLD, A_REVERSE])
+            else:
+                cpac(scr, 0, "   Load Game   ", [A_BOLD])
+            if syst.menu_sel == 2:
+                cpac(scr, 1, " 🢂 Quit 🢀 ", [A_BOLD, A_REVERSE])
+            else:
+                cpac(scr, 1, "   Quit   ", [A_BOLD])
+
+        # get user input
+        c = scr.getch()
+
+        # user pressed enter
+        if c == 10: # '\n'
+            if syst.menu_sel == 0:
+                syst.move(1)
+            elif syst.menu_sel == 1: # load game
+                pass # DO LATEr
+            elif syst.menu_sel == 2:
+                syst.quit_game()
+        elif c == KEY_DOWN: # change current selection
+            if syst.menu_sel == 2:
+                syst.menu_sel = 0
+            else:
+                syst.menu_sel += 1
+        elif c == KEY_UP: # change current selection
+            if syst.menu_sel == 0:
+                syst.menu_sel = 2
+            else:
+                syst.menu_sel -= 1
+        elif c == 101: # e to change language
+            syst.lang_change()
 
 
-
-running = True
-while running:
-	while loc == 0:
-		scr.erase()
-		if menu_sel == 0:
-			cpac(scr, -1, "Start New Game", [A_BOLD, A_REVERSE])
-		else:
-			cpac(scr, -1, "Start New Game", [A_BOLD])
-		if menu_sel == 1:
-			cpac(scr, 0, "Load Game", [A_BOLD, A_REVERSE])
-		else:
-			cpac(scr, 0, "Load Game", [A_BOLD])
-		if menu_sel == 2:
-			cpac(scr, 1, "Quit", [A_BOLD, A_REVERSE])
-		else:
-			cpac(scr, 1, "Quit", [A_BOLD])
-		c = scr.getch()
-		if c == 10: # '\n'
-			if menu_sel == 0:
-				loc = 1
-			elif menu_sel == 1:
-				pass # DO LATEr
-			elif menu_sel == 2:
-				loc = -1
-				running = False
-		elif c == KEY_DOWN:
-			if menu_sel == 2:
-				menu_sel = 0
-			else:
-				menu_sel += 1
-		elif c == KEY_UP:
-			if menu_sel == 0:
-				menu_sel = 2
-			else:
-				menu_sel -= 1
-
-
-	para = 0
-	while loc == 1:
-		scr.erase()
-		if para == 0:
-			cpabox(scr, 0, "なに?!?!?!?!?!?!?! わたしのおちんちんはどこ?!?!?!?!?!?!?!")
-			cpabox(scr, 1, "わたしいまのしょじょか?!?!?!?!?!?!")
-		elif para == 1:
-			cpabox(scr, 0, "WHATR !?!?!?")
-		c = scr.getch()
-		if c == 113:
-			loc = 0
-		elif c == 32:
-			if para < 1:
-				para += 1
+    while syst.loc == 1:
+        scr.erase()
+        if syst.lang == 0: # jpn
+            if syst.para == 0:
+                cpabox(scr, ["なに?!?!?!?!?!?!?! わたしのおちんちんはどこ?!?!?!?!?!?!?!",
+                    "わたしいまのしょじょか?!?!?!?!?!?!"])
+            elif syst.para == 1:
+                cpabox(scr, ["なに !?!?!?"])
+        else: # syst.lang == 1 / en
+            if syst.para == 0:
+                cpabox(scr, ["What?!?!?!??!?!? Where's my cock?!?!??!?!?!",
+                    "Am I... a woman now?!?!??!"])
+            elif syst.para == 1:
+                cpabox(scr, ["What the fuck??!?!?"])
+        c = scr.getch()
+        if c == 113:
+            syst.move(0) # return to menu
+        elif c == 32:
+            if syst.para < syst.para_max:
+                syst.para += 1
+        elif c == 101: # e for lang change
+            syst.lang_change()
 
 
 # end of program
