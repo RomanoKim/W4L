@@ -20,7 +20,8 @@ requiring external libraries, I've decided to compromise on an ASCII
 'block' (█) version. It will still be based on real image files but
 instead of presenting them directly, an average of the RGB values
 will be taken for every 4x8 section and a block will be printed for each
-in the top 78% of the terminal window (scr).
+in the top 78% of the terminal window (scr). *When creating* **images**,
+*their* **resolution must be 304x184**.
 
 
 Terminal Requirements:
