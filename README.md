@@ -7,7 +7,19 @@ Press 'e' to switch between English and Japanese.
 
 Press '(space)' to advance dialog.
 
-Use the arrow keys to change selections.
+Press 'b' to reverse dialog.
+
+Use the arrow keys to highlight a selection.
+
+Press 'ENTER' to accept selection.
+
+##### Mouse (works in some areas):
+
+Left click on a menu option to select and accept it.
+
+Left click and scroll down advance dialog.
+
+Right click and scroll up reverse dialog.
 
 
 ## Design Notes/Specifications
@@ -18,13 +30,8 @@ to vim. 'Tab' width will be 4-spaces wide.
 
 
 #### Graphics
-Very few terminals support in-terminal image viewing, not to mention
-requiring external libraries, I've decided to compromise on an ASCII
-'block' (█) version. It will still be based on real image files but
-instead of presenting them directly, an average of the RGB values
-will be taken for every 4x8 section and a block will be printed for each
-in the top 78% of the terminal window (scr). *When creating* **images**,
-*their* **resolution must be 304x184**.
+ASCII art, made with http://glassgiant.com/ascii/ using a width of **80**
+and a height of **18**.
 
 
 #### Terminal Requirements

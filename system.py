@@ -29,6 +29,8 @@ class system:
         self.para = 0
         # max paragraph
         self.para_max = -1
+        # current image_no
+        self.current_img = 0
 
     def update_time(self):
         self.time = time()

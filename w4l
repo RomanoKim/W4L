@@ -8,6 +8,7 @@ from curses import *
 from fdef import *
 from system import *
 import os
+import cpic
 
 # reduce escape delay to 10ms
 os.environ.setdefault('ESCDELAY', '10')
@@ -21,11 +22,13 @@ curs_set(0) # invis cursor
 # enable mouse events
 mousemask(ALL_MOUSE_EVENTS)
 # immediate mouse events
-mouseinterval(15)
+mouseinterval(1)
 
 
 # initialize system controller
 syst = system()
+# initialize image obj
+p = cpic.pix()
 
 while syst.running:
     # Main Menu
@@ -105,12 +108,17 @@ while syst.running:
 
     while syst.loc == 1:
         scr.erase()
+        if syst.para == 0:
+            p.disp_image(scr, 0)
+        else:
+            p.clear_image(scr)
+
         if syst.lang == 0: # jpn
             if syst.para == 0:
-                cpabox(scr, ["なに?!?!?!?!?!?!?! わたしのおちんちんはどこ?!?!?!?!?!?!?!",
-                    "わたしいまのしょじょか?!?!?!?!?!?!"])
+                cpabox(scr, ["なに？！？！？！わたしのおちんちんはどこ？！？！",
+                    "わたしいまのしょじょか？！？！？！"])
             elif syst.para == 1:
-                cpabox(scr, ["なに !?!?!?"])
+                cpabox(scr, ["なんだこれ。？！？！？！"])
         else: # syst.lang == 1 / en
             if syst.para == 0:
                 cpabox(scr, ["What?!?!?!??!?!? Where's my cock?!?!??!?!?!",
@@ -123,6 +131,8 @@ while syst.running:
             syst.move(0) # return to menu
         elif c == 32: # space = advance
             syst.forward()
+        elif c == 98: # b = back
+            syst.back()
         elif c == 101: # e for lang change
             syst.lang_change()
         # get mouse input
